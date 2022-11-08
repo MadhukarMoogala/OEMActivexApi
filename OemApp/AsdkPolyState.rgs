@@ -1,0 +1,14 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {7E924F99-E07C-11D2-8677-080009A0C626} = s 'AsdkPolyState Class'
+		{
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			'TypeLib' = s '{7E924F51-E07C-11D2-8677-080009A0C626}'
+		}
+	}
+}

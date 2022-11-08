@@ -1,0 +1,649 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2016 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+// oempolyapp.idl : IDL source for oempolyapp.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (oempolyapp.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    uuid(7E924F51-E07C-11D2-8677-080009A0C626),
+    version(2.0),
+    helpstring("AsdkPolyApplication Sample 2.0 Type Library")
+]
+library AsdkPoly2
+{
+    importlib("stdole32.tlb");
+    importlib("stdole2.tlb");
+    interface IAsdkPolyDocuments2;
+    interface IAsdkPolyDocument2;
+    interface IAsdkPolyUtility2;
+    interface IAsdkPolyState;
+
+    typedef [v1_enum] enum AsdkWindowState
+    {
+        asdkNorm = 1,
+        asdkMin,
+        asdkMax
+    } AsdkWindowState;
+
+    typedef [v1_enum] enum AsdkZoomScaleType
+    {
+        asdkZoomScaledAbsolute =  0,
+        asdkZoomScaledRelative =  1,
+        asdkZoomScaledRelativePSpace =  2
+    } AsdkZoomScaleType;
+
+    typedef [v1_enum] enum AsdkRegenType
+    {
+        asdkActiveViewport = 0,
+        asdkAllViewports = 1
+    } AsdkRegenType;
+
+    typedef [v1_enum] enum AsdkSelect
+    {
+        asdkSelectionSetWindow = 0,
+        asdkSelectionSetCrossing = 1,
+        asdkSelectionSetFence = 2,
+        asdkSelectionSetPrevious = 3,
+        asdkSelectionSetLast = 4,
+        asdkSelectionSetAll = 5,
+        asdkSelectionSetWindowPolygon = 6,
+        asdkSelectionSetCrossingPolygon = 7
+    } AsdkSelect;
+
+    typedef [v1_enum] enum AsdkPreviewMode
+    {
+        // Constants for Plot preview
+        asdkPartialPreview = 0,
+        asdkFullPreview = 1
+    } AsdkPreviewMode;
+
+    typedef [v1_enum] enum AsdkAngleUnits
+    {
+        // Constants for Interactive Functions
+        asdkDegrees = 0,
+        asdkDegreeMinuteSeconds = 1,
+        asdkGrads = 2,
+        asdkRadians = 3
+    } AsdkAngleUnits;
+
+    typedef [v1_enum] enum AsdkUnits
+    {
+        // Units for distof
+        asdkDefaultUnits = -1,
+        asdkScientific = 1,
+        asdkDecimal = 2,
+        asdkEngineering = 3,
+        asdkArchitectural = 4,
+        asdkFractional = 5
+    } AsdkUnits;
+
+    typedef [v1_enum] enum AsdkCoordinateSystem
+    {
+        // Constants for coordinate system transformations
+        asdkWorld = 0,
+        asdkUCS = 1,
+        asdkDisplayDCS = 2,
+        asdkPaperSpaceDCS = 3,
+        asdkOCS = 4,
+    } AsdkCoordinateSystem;
+
+    typedef [v1_enum] enum AsdkMenuGroupType
+    {
+        asdkBaseMenuGroup = 0,
+        asdkPartialMenuGroup = 1
+    } AsdkMenuGroupType;
+
+    typedef [v1_enum] enum AsdkMenuFileType
+    {
+        asdkMenuFileCompiled = 0,
+        asdkMenuFileSource = 1
+    } AsdkMenuFileType;
+
+    typedef [v1_enum] enum AsdkMenuItemType
+    {
+        asdkMenuItem = 0,
+        asdkMenuSeparator = 1,
+        asdkMenuSubMenu = 2
+    } AsdkMenuItemType;
+
+    typedef [v1_enum] enum AsdkToolbarDockStatus
+    {
+        asdkToolbarDockTop = 0,
+        asdkToolbarDockBottom = 1,
+        asdkToolbarDockLeft = 2,
+        asdkToolbarDockRight = 3,
+        asdkToolbarFloating = 4
+    } AsdkToolbarDockStatus;
+
+    typedef [v1_enum] enum AsdkToolbarItemType
+    {
+        asdkToolbarButton = 0,
+        asdkToolbarSeparator = 1,
+        asdkToolbarControl = 2,
+        asdkToolbarFlyout = 3
+    } AsdkToolbarItemType;
+
+    typedef [v1_enum] enum AsdkTextFontStyle
+    {
+        asdkFontRegular = 0,
+        asdkFontItalic = 1,
+        asdkFontBold = 2,
+        asdkFontBoldItalic = 3
+    } AsdkTextFontStyle;
+
+    typedef [v1_enum] enum AsdkColor
+    {
+        // AutoCAD's color palette
+        [helpstring("Color Byblock.")]
+        asdkByBlock = 0,
+        [helpstring("Color Red.")]
+        asdkRed = 1,
+        [helpstring("Color Yellow.")]
+        asdkYellow = 2,
+        [helpstring("Color Green.")]
+        asdkGreen = 3,
+        [helpstring("Color Cyan.")]
+        asdkCyan = 4,
+        [helpstring("Color Blue.")]
+        asdkBlue = 5,
+        [helpstring("Color Magenta.")]
+        asdkMagenta = 6,
+        [helpstring("Color White.")]
+        asdkWhite = 7,
+        [helpstring("Color Bylayer.")]
+        asdkByLayer = 256
+    } AsdkColor;
+
+    typedef [v1_enum] enum AsdkAlignmentPointAcquisition
+    {
+        asdkAlignPntAcquisitionAutomatic = 0,
+        asdkAlignPntAcquisitionShiftToAcquire
+    } AsdkAlignmentPointAcquisition;
+
+    typedef [v1_enum] enum AsdkXRefDemandLoad
+    {
+        // Constants for XRefDemandLoad property off of Preference
+        asdkDemandLoadDisabled = 0,
+        asdkDemandLoadEnabled = 1,
+        asdkDemandLoadEnabledWithCopy = 2
+    } AsdkXRefDemandLoad;
+
+    typedef [v1_enum] enum AsdkARXDemandLoad
+    {
+        // Proxy detection
+        asdkDemanLoadDisable = 0,
+        asdkDemandLoadOnObjectDetect = 1,
+        asdkDemandLoadCmdInvoke    = 2
+    } AsdkARXDemandLoad;
+
+    typedef [v1_enum] enum AsdkProxyImage
+    {
+        asdkProxyNotShow = 0,
+        asdkProxyShow = 1,
+        asdkProxyBoundingBox = 2
+    } AsdkProxyImage;
+
+    typedef [v1_enum] enum AsdkSaveAsType
+    {
+        asdkUnknown = -1,
+        asdkR12_dxf = 1,
+        asdkR13_dwg = 4,
+        asdkR13_dxf = 5,
+        asdkR14_dwg = 8,
+        asdkR14_dxf = 9,
+        asdkR15_dwg = 12,
+        asdkR15_dxf = 13,
+        asdkR15_Template = 14,
+        asdkR18_dwg = 24,
+        asdkR18_dxf = 25,
+        asdkR18_Template = 26,
+        asdkNative = asdkR18_dwg
+    } AsdkSaveAsType;
+
+    typedef [v1_enum] enum AsdkPrinterSpoolAlert
+    {
+        asdkPrinterAlwaysAlert = 0,
+        asdkPrinterAlertOnce,
+        asdkPrinterNeverAlertLogOnce,
+        asdkPrinterNeverAlert
+    } AsdkPrinterSpoolAlert;
+
+    typedef [v1_enum] enum AsdkOleQuality
+    {
+        asdkOQLineArt = 0,
+        asdkOQText,
+        asdkOQGraphics,
+        asdkOQPhoto,
+        asdkOQHighPhoto
+    } AsdkOleQuality;
+
+    typedef [v1_enum] enum AsdkPlotPolicy
+    {
+		asdkPolicyNamed = 0,
+        asdkPolicyLegacy
+    } AsdkPlotPolicy;
+
+    typedef [v1_enum] enum AsdkKeyboardAccelerator
+    {
+        // Preferences
+        asdkPreferenceClassic = 0,
+        asdkPreferenceCustom = 1
+    } AsdkKeyboardAccelerator;
+
+    typedef [v1_enum] enum AsdkKeyboardPriority
+    {
+        asdkKeyboardRunningObjSnap = 0,
+        asdkKeyboardEntry = 1,
+        asdkKeyboardEntryExceptScripts = 2
+    } AsdkKeyboardPriority;
+
+    typedef [v1_enum] enum AsdkInsertUnits
+    {
+        asdkInsertUnitsUnitless = 0,
+        asdkInsertUnitsInches,
+        asdkInsertUnitsFeet,
+        asdkInsertUnitsMiles,
+        asdkInsertUnitsMillimeters,
+        asdkInsertUnitsCentimeters,
+        asdkInsertUnitsMeters,
+        asdkInsertUnitsKilometers,
+        asdkInsertUnitsMicroinches,
+        asdkInsertUnitsMils,
+        asdkInsertUnitsYards,
+        asdkInsertUnitsAngstroms,
+        asdkInsertUnitsNanometers,
+        asdkInsertUnitsMicrons,
+        asdkInsertUnitsDecimeters,
+        asdkInsertUnitsDecameters,
+        asdkInsertUnitsHectometers,
+        asdkInsertUnitsGigameters,
+        asdkInsertUnitsAstronomicalUnits,
+        asdkInsertUnitsLightYears,
+        asdkInsertUnitsParsecs
+    } AsdkInsertUnits;
+
+    typedef [v1_enum] enum AsdkDrawingAreaSCMDefault
+    {
+        asdkRepeatLastCommand = 0,
+        asdkSCM
+    } AsdkDrawingAreaSCMDefault;
+
+    typedef [v1_enum] enum AsdkDrawingAreaSCMEdit
+    {
+        asdkEdRepeatLastCommand = 0,
+        asdkEdSCM
+    } AsdkDrawingAreaSCMEdit;
+
+    typedef [v1_enum] enum AsdkDrawingAreaSCMCommand
+    {
+		asdkEnter = 0,
+		asdkEnableSCMOptions,
+		asdkEnableSCM
+    } AsdkDrawingAreaSCMCommand;
+
+    [
+        object,
+        uuid(7E924F63-E07C-11D2-8677-080009A0C626),
+        dual,
+        helpstring("IAsdkPolyApplication2 Interface"),
+        pointer_default(unique)
+    ]
+    interface IAsdkPolyApplication2 : IDispatch
+    {
+        // Get the Name of the application
+        [
+            id(2),
+            propget,
+            helpstring("Specifies the name of the object")
+        ]
+        HRESULT Name([out, retval] BSTR* pAppName);
+
+               // Go back to mgself
+        [
+            id(4),
+            propget,
+            helpstring("Gets the Application object")
+        ]
+        HRESULT Application([out, retval] IAsdkPolyApplication2** pAppObj);
+
+        // Get the Active Document
+        [
+            id(5),
+            propget,
+            helpstring("Specifies the active document (drawing file)")
+        ]
+        HRESULT ActiveDocument([out, retval] IAsdkPolyDocument2** pActiveDoc);
+        [
+            id(5),
+            propput,
+            helpstring("Specifies the active document (drawing file)")
+        ]
+        HRESULT ActiveDocument([in] IAsdkPolyDocument2* pActiveDoc);
+		     
+		   
+
+        [
+            id(20),
+            helpstring("Accepts a program ID and attempts to load it into AutoCAD as an in-process server")
+        ]
+        HRESULT GetInterfaceObject([in] BSTR ProgID, [out, retval] IDispatch** pObj);
+		        
+        [
+            id(32),
+            propget,
+            helpstring("Returns the documents collection.")
+        ]
+        HRESULT Documents([out,retval] IAsdkPolyDocuments2** pDocuments);		     
+
+        // ZoomAll
+        [
+            id(37), 
+            helpstring("Zooms the current viewport to display the entire drawing")
+        ] 
+        HRESULT ZoomAll();        
+
+        // GetAcadState
+        [
+            id(42),
+            helpstring("Retrieves an AcadState object.")
+        ]
+        HRESULT GetAcadState([out, retval] IAsdkPolyState** pVal);
+		//Get Handle
+		[
+			id(43),
+			helpstring("Retrieves an AcadState object.")
+		]
+		HRESULT  get_HWND([retval][out]  LONG_PTR *hWnd) = 0;
+        
+    };
+
+    [
+        object,
+        uuid(7E924F66-E07C-11D2-8677-080009A0C626),
+        dual,
+        helpstring("IAsdkPolyDocuments2 Interface"),
+        pointer_default(unique)
+    ]
+    interface IAsdkPolyDocuments2 : IDispatch
+    {
+	// Open a Document
+	[
+		helpstring("Opens an existing drawing file (DWG) and makes it the active document")
+	]
+	HRESULT Open([in] BSTR Name, [in, optional] VARIANT ReadOnly, [in, optional]  VARIANT Password, [out, retval] IAsdkPolyDocument2** pDoc);
+    };
+
+    [
+        object,
+        uuid(7E924F68-E07C-11D2-8677-080009A0C626),
+        dual,
+        helpstring("IAsdkPolyDocument2 Interface"),
+        pointer_default(unique)
+    ]
+    interface IAsdkPolyDocument2 : IDispatch
+    {
+     
+        // Open
+        [
+            id(0x0000002A),
+            helpstring("Opens an existing drawing file (DWG) and makes it the active document")
+        ]
+        HRESULT Open([in] BSTR FullName, [in, optional] VARIANT Password, [out, retval] IAsdkPolyDocument2** pDocObj);
+		 
+
+
+    };
+	
+    [
+        object,
+        uuid(7E924F74-E07C-11D2-8677-080009A0C626),
+        dual,
+        helpstring("IAsdkPolyUtility2 Interface"),
+        pointer_default(unique)
+    ]
+    interface IAsdkPolyUtility2 : IDispatch
+    {
+        [
+            helpstring("Converts an angle as a string to a real (double) value")
+        ]
+        HRESULT AngleToReal([in] BSTR Angle, [in] AsdkAngleUnits Unit, [out, retval] double* Value);
+
+        [
+            helpstring("Converts an angle from a real (double) value to a string")
+        ]
+        HRESULT AngleToString([in] double Angle, [in] AsdkAngleUnits Unit, [in] int Precision,
+            [out, retval] BSTR* bstrValue);
+
+        [
+            helpstring("Converts a distance from a string to a real (double) value")
+        ]
+        HRESULT DistanceToReal([in] BSTR Distance, [in] AsdkUnits Unit, [out, retval] double* Value);
+
+        [
+            helpstring("Converts a real (double) value to a string")
+        ]
+        HRESULT RealToString([in] double Value, [in] AsdkUnits Unit, [in] int Precision,
+            [out, retval] BSTR* bstrValue);
+
+        [
+            helpstring("Translates a point from one coordinate system to another coordinate system")
+        ]
+        HRESULT TranslateCoordinates([in] VARIANT Point, [in] AsdkCoordinateSystem FromCoordSystem, 
+            [in] AsdkCoordinateSystem ToCoordSystem, [in] int Displacement, [in, optional] VARIANT OCSNormal,
+            [out, retval] VARIANT* transPt);
+
+        [
+            helpstring("Initializes the GetKeyword method")
+        ]
+        HRESULT InitializeUserInput([in] int Bits, [in, optional] VARIANT KeyWordList);
+
+        [
+            helpstring("Gets an integer value from the user")
+        ]
+        HRESULT GetInteger([in, optional] VARIANT Prompt, [out, retval] int* Value);
+
+        [
+            helpstring("Gets a real (double) value from the user")
+        ]
+        HRESULT GetReal([in, optional] VARIANT Prompt, [out, retval] double* Value);
+
+        [
+            helpstring("Converts an input string from the user into a keyword index")
+        ]
+        HRESULT GetInput([out, retval] BSTR* Value);
+
+        [
+            helpstring("Gets a keyword string from the user")
+        ]
+        HRESULT GetKeyword([in, optional] VARIANT Prompt, [out, retval] BSTR* bstrKeyword);
+
+        [
+            helpstring("Gets a string from the user")
+        ]
+        HRESULT GetString([in] int HasSpaces, [in, optional] VARIANT Prompt, [out, retval] BSTR* bstrValue);
+
+        [
+            helpstring("Gets the angle specified. Considers the setting of the ANGBASE system variable")
+        ]
+        HRESULT GetAngle([in, optional] VARIANT Point, [in, optional] VARIANT Prompt,
+            [out, retval] double* Angle);
+
+        [
+            helpstring("Gets the angle of a line from the X axis")
+        ]
+        HRESULT AngleFromXAxis([in] VARIANT StartPoint, [in] VARIANT EndPoint,
+            [out, retval] double* angle);
+
+        [
+            helpstring("Gets a corner of a rectangle")
+        ]
+        HRESULT GetCorner([in] VARIANT Point, [in, optional] VARIANT Prompt,
+            [out, retval] VARIANT* corner);
+
+        [
+            helpstring("Gets the distance from the prompt line or a selected set of points on the screen")
+        ]
+        HRESULT GetDistance([in, optional] VARIANT Point, [in, optional] VARIANT Prompt,
+            [out, retval] double* dist);
+
+        [
+            helpstring("Gets the angle specified. Ignores the setting of the ANGBASE system variable")
+        ]
+        HRESULT GetOrientation([in, optional] VARIANT Point, [in, optional] VARIANT Prompt,
+            [out, retval] double* angle);
+
+        [
+            helpstring("Gets the point selected in AutoCAD")
+        ]
+        HRESULT GetPoint([in, optional] VARIANT Point, [in, optional] VARIANT Prompt,
+            [out, retval] VARIANT* inputPoint);
+
+        [
+            helpstring("Gets the point at a specified angle and distance from a given point")
+        ]
+        HRESULT PolarPoint([in] VARIANT Point, [in] double Angle, [in] double Distance,
+            [out, retval] VARIANT* inputPoint);
+
+        [
+            vararg,
+            helpstring("Creates a variant that contains an array of typed arguments")
+        ]
+        HRESULT CreateTypedArray([out] VARIANT* varArr, [in] int type, [in] SAFEARRAY(VARIANT) inArgs);
+
+        [
+            helpstring("Gets an object interactively")
+        ]
+        HRESULT GetEntity([out] IDispatch** Object, [out] VARIANT *PickedPoint, [in, optional] VARIANT Prompt);
+
+        [
+            helpstring("Posts a prompt to the command line")
+        ]
+        HRESULT Prompt([in] BSTR Message);
+
+        [
+            helpstring("Gets an object or subentity interactively")
+        ]
+        HRESULT GetSubEntity([out] IDispatch** Object, [out] VARIANT *PickedPoint,
+            [out] VARIANT* TransMatrix, [out] VARIANT* ContextData, [in, optional] VARIANT Prompt);
+
+        [
+            helpstring("Validates a given URL")
+        ]
+        HRESULT IsURL([in] BSTR URL, [out, retval] VARIANT_BOOL* IsValidURL);
+
+        [
+            helpstring("Downloads the file specified by a URL")
+        ]
+        HRESULT GetRemoteFile([in] BSTR URL, [out] BSTR* LocalFile, [in] VARIANT_BOOL IgnoreCache);
+
+        [
+            helpstring("Uploads a file to a remote location specified by a URL")
+        ]
+        HRESULT PutRemoteFile([in] BSTR URL, [in] BSTR LocalFile);
+
+        [
+            helpstring("Returns the URL that a remote file was downloaded from")
+        ]
+        HRESULT IsRemoteFile([in] BSTR LocalFile, [out] BSTR* URL, 
+                                                [out, retval] VARIANT_BOOL* IsDownloadedFile);
+        [
+            helpstring("Launches the Web Browser dialog that allows the user to navigate to any URL and select a URL")
+        ]
+        HRESULT LaunchBrowserDialog([out]  BSTR* SelectedURL, 
+                                    [in] BSTR DialogTitle,
+                                    [in] BSTR OpenButtonCaption,
+                                    [in] BSTR StartPageURL,
+                                    [in] BSTR RegistryRootKey,
+                                    [in] VARIANT_BOOL OpenButtonAlwaysEnabled,
+                                    [out, retval] VARIANT_BOOL* Success);
+    };
+
+   [
+        object,
+        uuid(7E924F98-E07C-11D2-8677-080009A0C626),
+        dual,
+        helpstring("IAsdkPolyState Interface"),
+        pointer_default(unique)
+    ]
+    interface IAsdkPolyState : IDispatch
+    {
+        // Get the application object
+        [
+            id(0x01),
+            propget,
+            helpstring("Returns the application object.")
+        ]
+        HRESULT Application([out, retval] IAsdkPolyApplication2** pAppObj);
+
+        // IsQuiescent
+        [
+            id(0x02),
+            propget,
+            helpstring("Specifies if aoem is idle and accepting out of process Automation requests.")
+        ]
+        HRESULT IsQuiescent([out, retval] VARIANT_BOOL* pVal);
+    };
+
+    [
+        uuid(7E924F64-E07C-11D2-8677-080009A0C626),
+        helpstring("AsdkPolyApplication Class")
+    ]
+    coclass AsdkPolyApplication
+    {
+        [default] interface IAsdkPolyApplication2;
+    };
+
+    [
+        uuid(7E924F67-E07C-11D2-8677-080009A0C626),
+        noncreatable,
+        helpstring("AsdkPolyDocs Class")
+    ]
+    coclass AsdkPolyDocuments
+    {
+        [default] interface IAsdkPolyDocuments2;
+    };
+
+    [
+        uuid(7E924F69-E07C-11D2-8677-080009A0C626),
+        noncreatable,
+        helpstring("AsdkPolyDoc Class")
+    ]
+    coclass AsdkPolyDocument
+    {
+        [default] interface IAsdkPolyDocument2;
+    };
+
+ 
+
+    [
+        uuid(7E924F75-E07C-11D2-8677-080009A0C626),
+        noncreatable,
+        helpstring("AsdkPolyUtil Class")
+    ]
+    coclass AsdkPolyUtility
+    {
+        [default] interface IAsdkPolyUtility2;
+    };
+
+   [
+        uuid(7E924F99-E07C-11D2-8677-080009A0C626),
+        noncreatable,
+        helpstring("AsdkPolyState Class")
+    ]
+    coclass AsdkPolyState
+    {
+        [default] interface IAsdkPolyState;
+    };
+};

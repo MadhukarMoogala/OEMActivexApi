@@ -1,0 +1,25 @@
+HKCR
+{
+	AsdkPolyApp.AsdkPolyApp.2 = s 'AsdkPolyApplication Class'
+	{
+		CLSID = s '{7E924F64-E07C-11D2-8677-080009A0C626}'
+	}
+	AsdkPolyApp.AsdkPolyApp = s 'AsdkPolyApplication Class'
+	{
+		CLSID = s '{7E924F64-E07C-11D2-8677-080009A0C626}'
+		CurVer = s 'AsdkPolyApp.AsdkPolyApp.2'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {7E924F64-E07C-11D2-8677-080009A0C626} = s 'AsdkPolyApplication Class'
+		{
+			ProgID = s 'AsdkPolyApp.AsdkPolyApp.2'
+			VersionIndependentProgID = s 'AsdkPolyApp.AsdkPolyApp'
+			ForceRemove 'Programmable'
+			ForceRemove LocalServer32 = s 'C:\Program Files\Autodesk\AutoCAD OEM 2017 - English\oem\XCAD\XCAD.exe /Automation'
+			{
+			}
+			'TypeLib' = s '{7E924F51-E07C-11D2-8677-080009A0C626}'
+		}
+	}
+}
