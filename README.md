@@ -55,12 +55,16 @@ HKCR
 
 ### Demo
 
-Full demo of this project available here [[http://autode.sk/2pGrway]](http://autode.sk/2pGrway%5D) Note while checking for IsQuiescent, application fails in demo video, this because my screencast has consumed OEM app.
 
-## License
+
+https://user-images.githubusercontent.com/6602398/200483128-afb445fd-9d97-44c8-84e1-86aeb591776e.mp4
+
+ NOTE: while checking for IsQuiescent, application fails in demo video, this because my screencast has consumed OEM app.
+
+### License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](https://github.com/MadhukarMoogala/OEMActivexApi/blob/main/LICENSE) file for full details.
 
-## Written By
+### Written By
 
 Madhukar Moogala, [Forge Partner Development](http://forge.autodesk.com/) @galakar
